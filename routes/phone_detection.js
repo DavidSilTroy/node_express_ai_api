@@ -38,8 +38,8 @@ router.post('/', async(req, res, next) => {
         // console.log(model.inputs[0].shape);
         let flowers = await detection(imgBinary, model, classThreshold);
 
-        return res.send(`Deteted: ${flowers} flowers`);
-        // res.json(req.body);
+        // return res.send(`Deteted: ${flowers} flowers`);
+        res.json({ flowers });
 
     } catch (e) {
         next(e);
@@ -48,7 +48,7 @@ router.post('/', async(req, res, next) => {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.send('Hello amigo, this page is working fine');
+    res.send('Hello amiga, this page is working fine for the phone pictures');
 });
 
 module.exports = router;

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var tf = require("@tensorflow/tfjs");
+const sharp = require("sharp");
+
 
 //Object detection functions
 let model = null;
@@ -10,7 +12,6 @@ const drone_model = 'https://raw.githubusercontent.com/DavidSilTroy/node_express
 
 
 router.post('/', async(req, res, next) => {
-    let classThreshold = 0.5;
     try {
         if (model == null) {
             model = await load_model(drone_model);
@@ -40,18 +41,10 @@ router.post('/', async(req, res, next) => {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.send('Hello amigo, this page is working fine');
+    res.send('Hello amiga, this page is working fine for the Drone pictures');
 });
 
 
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//Testing split image
-const sharp = require("sharp");
 
 const splitImage = async(src, number) => {
     const image = sharp(Buffer.from(src, "base64"));
@@ -78,31 +71,16 @@ const splitImage = async(src, number) => {
             });
 
             const imgBinary = await Buffer.from(chunkImage, 'base64')
-                // console.log(imgBinary);
 
-            // console.log(model.inputs[0].shape);
             flowers_here = await detection(imgBinary, model, classThreshold);
 
-            // return res.send(`Deteted: ${flowers} flowers`);
-
-            // saveData(chunkImage, `SubImageBase64-${flowers}`);
-            // console.log(`Detecting image ${flowers_here}`);
             flowers += flowers_here;
         }
     }
-    console.log("Sub Images ready");
     return flowers;
 
 }
 
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
