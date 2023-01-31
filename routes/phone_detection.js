@@ -7,6 +7,7 @@ let model = null;
 var load_model = require('../tools/load_model')
 var detection = require('../tools/object_detection')
 const phone_model = 'https://raw.githubusercontent.com/DavidSilTroy/node_express_ai_api/main/public/models/phone/model.json';
+const drone_model = 'https://raw.githubusercontent.com/DavidSilTroy/node_express_ai_api/main/public/models/drone/model.json';
 
 
 router.post('/', async(req, res, next) => {
