@@ -61,8 +61,10 @@ router.post('/yolov5-cropped', async(req, res, next) => {
         const imgdata = await req.body.base64image;
         // extracting the base64 image string from the request
         const base64img = await y5m.extracBase64Image(imgdata)
-            // detecting the number of flowers
-        let flowers = await y5m.droneDetect(base64img, classThreshold);
+            //transforming image from base64 to binary
+        const imgBinary = await Buffer.from(base64img, 'base64');
+        // detecting the number of flowers
+        let flowers = await y5m.droneDetect(imgBinary, classThreshold);
         //response with a json {"flowers" : # }
         res.json({ flowers });
     } catch (e) {

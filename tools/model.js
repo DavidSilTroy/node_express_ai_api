@@ -145,7 +145,7 @@ class Models {
                 if (useRoboflow) {
                     flowers_here = await this.roboflowDetect(chunkImage);
                 } else {
-                    const imgBinary = await Buffer.from(chunkImage, 'base64')
+                    const imgBinary = await Buffer.from(chunkImage, 'base64');
                     flowers_here = await this.droneDetect(imgBinary, classThreshold);
                 }
                 flowers += flowers_here;
