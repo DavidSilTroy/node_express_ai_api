@@ -11,7 +11,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var phoneDetectionRouter = require('./routes/phone_detection');
 var droneDetectionRouter = require('./routes/drone_detection');
-// // var flowersRouter = require('./routes/flowers');
 
 
 app.use(express.json());
