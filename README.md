@@ -22,6 +22,14 @@ yarn install
 ```
 npm start
 ```
+#### Currently in http://localhost:8080/ you can request to:
+
+- http://localhost:8080/drone-big-img/roboflow <-- receive full Drone image in base64 with x-www-urlencode 
+- http://localhost:8080/drone-big-img/yolov5 <-- receive full Drone image in base64 with x-www-urlencode
+- http://localhost:8080/drone-big-img <-- (redirects to the /drone-big-img/roboflow, so it's the same as before) 
+- http://localhost:8080/phone-big-img <-- receive full Phone image in base64 with x-www-urlencode
+
+
 ### More about how to use it will come later!..
 
 </br></br></br></br></br>
