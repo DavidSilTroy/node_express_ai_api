@@ -17,6 +17,11 @@ class Models {
         return Models.instance;
     }
 
+    async extracBase64Image(imgdata) {
+        const base64img = await imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+        return base64img;
+    }
+
     async loadModel(model_location, modelName) {
         const yolov_5model = await tf.loadGraphModel(model_location);
         console.log(`${modelName} model ready to use`);

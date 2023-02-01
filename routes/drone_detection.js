@@ -16,8 +16,8 @@ router.post('/roboflow', async(req, res, next) => {
         // getting the image from the request in the x-www-form-urlencode
         const imgdata = await req.body.base64image;
         // extracting the base64 image string from the request
-        const base64img = await imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-        // detecting the number of flowers
+        const base64img = await y5m.extracBase64Image(imgdata)
+            // detecting the number of flowers
         let flowers = await y5m.splitImageAndDetect(base64img, 10, classThreshold, true);
         //response with a json {"flowers" : # }
         res.json({ flowers });
@@ -25,13 +25,13 @@ router.post('/roboflow', async(req, res, next) => {
         next(e);
     }
 });
-router.post('/roboflow-croped', async(req, res, next) => {
+router.post('/roboflow-cropped', async(req, res, next) => {
     try {
         // getting the image from the request in the x-www-form-urlencode
         const imgdata = await req.body.base64image;
         // extracting the base64 image string from the request
-        const base64img = await imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-        // detecting the number of flowers
+        const base64img = await y5m.extracBase64Image(imgdata)
+            // detecting the number of flowers
         let flowers = await y5m.roboflowDetect(base64img);
         //response with a json {"flowers" : # }
         res.json({ flowers });
@@ -45,8 +45,8 @@ router.post('/yolov5', async(req, res, next) => {
         // getting the image from the request in the x-www-form-urlencode
         const imgdata = await req.body.base64image;
         // extracting the base64 image string from the request
-        const base64img = await imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-        // detecting the number of flowers
+        const base64img = await y5m.extracBase64Image(imgdata)
+            // detecting the number of flowers
         let flowers = await y5m.splitImageAndDetect(base64img, 10, classThreshold, false);
         //response with a json {"flowers" : # }
         res.json({ flowers });
@@ -54,14 +54,14 @@ router.post('/yolov5', async(req, res, next) => {
         next(e);
     }
 });
-router.post('/yolov5-croped', async(req, res, next) => {
+router.post('/yolov5-cropped', async(req, res, next) => {
     let classThreshold = 0.5;
     try {
         // getting the image from the request in the x-www-form-urlencode
         const imgdata = await req.body.base64image;
         // extracting the base64 image string from the request
-        const base64img = await imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-        // detecting the number of flowers
+        const base64img = await y5m.extracBase64Image(imgdata)
+            // detecting the number of flowers
         let flowers = await y5m.droneDetect(base64img, classThreshold);
         //response with a json {"flowers" : # }
         res.json({ flowers });
