@@ -10,8 +10,7 @@ var app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var phoneDetectionRouter = require('./routes/phone_detection');
-var droneBigImgDetectionRouter = require('./routes/d_img_big');
-var droneBigImgRoboflowDetectionRouter = require('./routes/d_rf_img_big');
+var droneDetectionRouter = require('./routes/drone_detection');
 // // var flowersRouter = require('./routes/flowers');
 
 
@@ -36,9 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.use('/phone-big-img-y5', phoneDetectionRouter);
-app.use('/drone-big-img-y5', droneBigImgDetectionRouter);
-app.use('/drone-big-img-rf', droneBigImgRoboflowDetectionRouter);
+app.use('/phone-big-img', phoneDetectionRouter);
+app.use('/drone-big-img', droneDetectionRouter);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

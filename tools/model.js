@@ -1,11 +1,14 @@
 var tf = require("@tensorflow/tfjs");
 var tfnode = require("@tensorflow/tfjs-node");
+var axios = require("axios");
+var sharp = require("sharp");
 
 class Models {
     static instance = null;
 
     droneModel = null;
     phoneModel = null;
+    classThreshold = 0.5;
 
     static getInstance() {
         if (!Models.instance) {
@@ -83,19 +86,65 @@ class Models {
         // return result;
     }
 
-    async droneDetect(imgSource, classThreshold) {
+    async droneDetect(imgSource, classThreshold = this.classThreshold) {
         if (this.droneModel != null) {
             let detection = await this.detectImage(imgSource, this.droneModel, classThreshold)
             return detection;
         }
         return 0;
     }
-    async phoneDetect(imgSource, classThreshold) {
+    async phoneDetect(imgSource, classThreshold = this.classThreshold) {
         if (this.phoneModel != null) {
             let detection = await this.detectImage(imgSource, this.phoneModel, classThreshold)
             return detection;
         }
         return 0;
+    }
+    async splitImageAndDetect(src, number, classThreshold = this.classThreshold, useRoboflow = true) {
+        const image = sharp(Buffer.from(src, "base64"));
+        const { width, height } = await image.metadata();
+        const chunkWidth = Math.floor(width / number);
+        const chunkHeight = Math.floor(height / number);
+        let flowers = 0;
+
+        for (let r = 0; r < number; r++) {
+            for (let c = 0; c < number; c++) {
+                const x = c * chunkWidth;
+                const y = r * chunkHeight;
+
+                const chunk = image.clone().extract({
+                    left: x,
+                    top: y,
+                    width: chunkWidth,
+                    height: chunkHeight
+                });
+
+                const chunkImage = await chunk.toBuffer({ resolveWithObject: true }).then(({ data, info }) => {
+                    return data.toString("base64");
+                });
+
+                if (useRoboflow) {
+                    let roboflowx = await axios({
+                        method: "POST",
+                        url: "https://detect.roboflow.com/flowerd-drone/1",
+                        params: {
+                            api_key: "ibSyXKEsNKnMN4pyQIuk"
+                        },
+                        data: chunkImage,
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    })
+                    flowers += roboflowx.data.predictions.length;
+                } else {
+                    const imgBinary = await Buffer.from(chunkImage, 'base64')
+                    let flowers_here = await this.droneDetect(imgBinary, classThreshold);
+                    flowers += flowers_here;
+                }
+            }
+        }
+        return flowers;
+
     }
 }
 

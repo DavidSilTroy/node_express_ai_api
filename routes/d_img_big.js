@@ -12,6 +12,7 @@ const drone_model = 'https://raw.githubusercontent.com/DavidSilTroy/node_express
 
 
 router.post('/', async(req, res, next) => {
+    res.redirect(307, '/roboflow');
     try {
         if (model == null) {
             model = await load_model(drone_model);

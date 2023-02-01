@@ -1,5 +1,4 @@
-var tf = require("@tensorflow/tfjs");
-var tfnode = require("@tensorflow/tfjs-node");
+var yolov5_model = require('../tools/model')
 
 //For big images, as the drone photos, split the big image into little images and detect the flowers in each sub-image
 const splitImageAndDetect = async(src, number) => {
