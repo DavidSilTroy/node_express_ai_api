@@ -24,12 +24,12 @@ npm start
 ```
 #### Currently in http://localhost:8080/ you can request to:
 
-- http://localhost:8080/phone-big-img <-- receive full Phone image in base64 with x-www-urlencode (3000x4000px image)
-- http://localhost:8080/drone-big-img <-- (redirects to the /drone-big-img/roboflow) 
-- http://localhost:8080/drone-big-img/roboflow <-- receive full Drone image in base64 with x-www-urlencode (8192x5460px image)
-- http://localhost:8080/drone-big-img/roboflow-cropped <-- receive a cropped Drone image in base64 with x-www-urlencode (~820x540px image)
-- http://localhost:8080/drone-big-img/yolov5 <-- receive full Drone image in base64 with x-www-urlencode (8192x5460px image)
-- http://localhost:8080/drone-big-img/yolov5-cropped <-- receive a cropped Drone image in base64 with x-www-urlencode (~820x540px image)
+- http://localhost:8080/phone-big-img </br> Receive full Phone image in base64 with x-www-urlencode (3000x4000px image)
+- http://localhost:8080/drone-big-img </br> (redirects to the /drone-big-img/roboflow) 
+- http://localhost:8080/drone-big-img/roboflow  </br> Receive full Drone image in base64 with x-www-urlencode (8192x5460px image)
+- http://localhost:8080/drone-big-img/roboflow-cropped  </br> Receive a cropped Drone image in base64 with x-www-urlencode (~820x540px image)
+- http://localhost:8080/drone-big-img/yolov5  </br> Receive full Drone image in base64 with x-www-urlencode (8192x5460px image)
+- http://localhost:8080/drone-big-img/yolov5-cropped  </br> Receive a cropped Drone image in base64 with x-www-urlencode (~820x540px image)
 
 
 ### More about how to use it will come later!..
