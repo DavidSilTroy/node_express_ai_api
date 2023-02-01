@@ -1,54 +1,39 @@
 var express = require('express');
 var router = express.Router();
-var tf = require("@tensorflow/tfjs");
-
-//Object detection functions
-let model = null;
-var load_model = require('../tools/load_model')
-var detection = require('../tools/object_detection')
+var yolov5_model = require('../tools/model')
 const phone_model = 'https://raw.githubusercontent.com/DavidSilTroy/node_express_ai_api/main/public/models/phone/model.json';
-const drone_model = 'https://raw.githubusercontent.com/DavidSilTroy/node_express_ai_api/main/public/models/drone/model.json';
-
 
 router.post('/', async(req, res, next) => {
     let classThreshold = 0.5;
     try {
-        if (model == null) {
-            model = await load_model(phone_model);
+        //initializing the class for object detection with yolov5 exported model
+        const y5m = new yolov5_model();
+        //checking the model is loaded
+        if (y5m.phoneModel == null) {
+            // load the model
+            await y5m.loadModel(phone_model, 'phone');
         } else {
-            console.log('Model is good');
+            // all good, model was already there
+            console.log('Phone model is already loaded');
         }
-        // warming up model
-        const dummyInput = tf.ones(model.inputs[0].shape);
-        const warmupResult = await model.executeAsync(dummyInput);
-        tf.dispose(warmupResult); // cleanup memory
-        tf.dispose(dummyInput); // cleanup memory
-
+        // getting the image from the request in the x-www-form-urlencode
         const imgdata = await req.body.base64image;
-        // console.log(imgdata.substring(0, 10));
-
-        // to convert base64 format into random filename
+        // extracting the base64 image string from the request
         const base64img = await imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-        // console.log(base64img.substring(0, 10));
-        // tf.engine().startScope(); // start scoping tf engine
-
+        // transforming the base64 image into binary format
         const imgBinary = await Buffer.from(base64img, 'base64')
-            // console.log(imgBinary);
-
-        // console.log(model.inputs[0].shape);
-        let flowers = await detection(imgBinary, model, classThreshold);
-
-        // return res.send(`Deteted: ${flowers} flowers`);
+            // detecting the number of flowers
+        let flowers = await y5m.phoneDetect(imgBinary, classThreshold);
+        //response with a json {"flowers" : # }
         res.json({ flowers });
-
     } catch (e) {
         next(e);
     }
 });
 
-/* GET users listing. */
+/* GET . */
 router.get('/', function(req, res, next) {
-    res.send('Hello amiga, this page is working fine for the phone pictures');
+    res.send('Hello friend, this page is working fine for the phone pictures');
 });
 
 module.exports = router;

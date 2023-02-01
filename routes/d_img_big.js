@@ -41,7 +41,7 @@ router.post('/', async(req, res, next) => {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.send('Hello amiga, this page is working fine for the Drone pictures');
+    res.send('Hello friend, this page is working fine for the Drone pictures');
 });
 
 
@@ -70,9 +70,10 @@ const splitImage = async(src, number) => {
                 return data.toString("base64");
             });
 
+            //Only this is different
             const imgBinary = await Buffer.from(chunkImage, 'base64')
-
             flowers_here = await detection(imgBinary, model, classThreshold);
+            //finished different part
 
             flowers += flowers_here;
         }

@@ -24,7 +24,7 @@ router.post('/', async(req, res, next) => {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.send('Hello amiga, this page is working fine for the Drone pictures');
+    res.send('Hello friend, this page is working fine for the Drone pictures');
 });
 
 
