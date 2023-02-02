@@ -108,9 +108,9 @@ class Models {
     async roboflowDetect(base64imagee) {
         let roboflowx = await axios({
             method: "POST",
-            url: "https://detect.roboflow.com/flowerd-drone/1",
+            url: "https://detect.roboflow.com/strawberry-flowers-bxn3k/4",
             params: {
-                api_key: "ibSyXKEsNKnMN4pyQIuk"
+                api_key: "DoAZDoMpOCmxigVVKmtg"
             },
             data: base64imagee,
             headers: {
@@ -152,7 +152,6 @@ class Models {
             }
         }
         return flowers;
-
     }
 }
 
